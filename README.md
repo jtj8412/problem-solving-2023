@@ -3,7 +3,7 @@
 ## Programmers
 ```
 Level1		0
-Level2		13
+Level2		14
 Level3		0
 ```
 
@@ -11,8 +11,6 @@ Level3		0
 ```
 Bronze		0
 Silver		0
-Gold		  0
+Gold		0
 Platinum	0
 ```
-
-Total Update: 23.06.06

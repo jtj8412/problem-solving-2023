@@ -5,44 +5,43 @@
 
 using namespace std;
 
-long long logic(int cap, int n, const vector<int>& vec) {
-    long long ret = 0;
-    int remain = 0, right = n;
-
-    for (int i = n - 1; i >= 0; --i) {
-        int cnt = vec[i];
-        int amt = min(cnt, cap - remain);
-
-        if (remain == 0) right = i;
-
-        remain += amt;
-        cnt -= amt;
-
-        if (remain < cap) continue;
-        
-        ret += (right + 1) * 2;
-        ret += (cnt / cap) * (i + 1) * 2;
-        remain = cnt % cap;
-        
-        if (remain > 0) right = i;
-    }
-
-    if (remain > 0) {
-        ret += (right + 1) * 2;
-    }
-
-    return ret;
-}
-
 long long solution(int cap, int n, vector<int> deliveries, vector<int> pickups) {
-    return max(logic(cap, n, deliveries), logic(cap, n, pickups));
-}
+	long long answer = 0;
+	int deli_idx = n - 1, pick_idx = n - 1, remain;
 
-int main() {
-    int cap = 4;
-    int n = 5;
-    vector<int> deliveries = {1,0,3,1,2};
-    vector<int> pickups = {0,3,0,4,0};
+	// init xxx_idx.
+	while (deli_idx >= 0 && !deliveries[deli_idx]) deli_idx--;
+	while (pick_idx >= 0 && !pickups[pick_idx]) pick_idx--;
 
-    cout << "answer: " << solution(cap, n, deliveries, pickups);
+	// logic.
+	while (deli_idx >= 0 || pick_idx >= 0) {
+		// most right idx.
+		int max_idx = max(deli_idx, pick_idx);
+
+		// delivery for {cap} times.
+		remain = cap;
+		for (; deli_idx >= 0; --deli_idx) {
+			int amt = min(deliveries[deli_idx], remain);
+			deliveries[deli_idx] -= amt;
+			remain -= amt;
+			if (remain == 0) break;
+		}
+
+		// pickup for {cap} times.
+		remain = cap;
+		for (; pick_idx >= 0; --pick_idx) {
+			int amt = min(pickups[pick_idx], remain);
+			pickups[pick_idx] -= amt;
+			remain -= amt;
+			if (remain == 0) break;
+		}
+
+		answer += (max_idx + 1) * 2;
+
+		// update xxx_idx.
+		while (deli_idx >= 0 && !deliveries[deli_idx]) deli_idx--;
+		while (pick_idx >= 0 && !pickups[pick_idx]) pick_idx--;
+	}
+
+	return answer;
 }
