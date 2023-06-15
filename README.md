@@ -3,7 +3,7 @@
 ## Programmers
 ```
 Level1		0
-Level2		14
+Level2		20
 Level3		0
 ```
 
