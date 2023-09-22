@@ -3,8 +3,8 @@
 ## Programmers
 ```
 Level1		10
-Level2		20
-Level3		0
+Level2		27
+Level3		2
 ```
 
 ## Baekjoon
